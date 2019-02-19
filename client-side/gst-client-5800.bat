@@ -1,0 +1,1 @@
+gst-client-generic.bat 5800
