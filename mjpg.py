@@ -12,6 +12,7 @@ import os
 
 capture=None
 imgBuf = None
+fps = 10
 
 class CamHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
@@ -36,7 +37,7 @@ class CamHandler(BaseHTTPRequestHandler):
 					self.end_headers()
 					self.wfile.write(bytearray(imgBuf))
 					self.wfile.write('\r\n')
-					time.sleep(0.05)
+					time.sleep(1.0/fps)
 				except KeyboardInterrupt:
 					break
 			return
@@ -57,9 +58,9 @@ def capturer():
 		if not rc:
 			continue
 		#cv2.imwrite(imgPath, img)
-		r,imgBuf = cv2.imencode(".jpg", img)
+		r,imgBuf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 50])
 		#open(imgPath, 'wb').write(buf)
-		time.sleep(0.05)
+		time.sleep(0.03)
 
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
 	pass
