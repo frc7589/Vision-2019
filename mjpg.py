@@ -4,6 +4,7 @@
 	A Simple mjpg stream http server
 '''
 import cv2
+import numpy as np
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 import time
 from SocketServer import ThreadingMixIn
@@ -58,7 +59,13 @@ def capturer():
 		if not rc:
 			continue
 		#cv2.imwrite(imgPath, img)
-		r,imgBuf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 50])
+		img = cv2.merge((img[:,:,0]>>3<<3, img[:,:,1]>>3<<3, img[:,:,2]>>3<<3))
+		img = cv2.medianBlur(img,3)
+		yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+		#yuv = cv2.merge((yuv[:,:,0]>>2<<2, yuv[:,:,1]>>6<<6, yuv[:,:,2]>>6<<6))
+		yuv = cv2.medianBlur(yuv,3)
+		img = cv2.cvtColor(yuv, cv2.COLOR_YUV2BGR)
+		r,imgBuf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 30])
 		#open(imgPath, 'wb').write(buf)
 		time.sleep(0.03)
 
