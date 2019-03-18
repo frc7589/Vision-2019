@@ -1,1 +1,0 @@
-C:\gstreamer\1.0\x86_64\bin\gst-launch-1.0 videotestsrc ! openh264enc ! rtph264pay config-interval=10 pt=96 ! udpsink host=10.75.89.255 port=5803
