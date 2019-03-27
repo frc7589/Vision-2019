@@ -36,7 +36,7 @@ class CamHandler(BaseHTTPRequestHandler):
 					break
 			return
 		if self.path.endswith('.html') or self.path=="/":
-			html = open('index.html', 'r').read()
+			html = open(os.path.dirname(os.path.realpath(__file__))+'/index.html', 'r').read()
 			self.send_response(200)
 			self.send_header('Content-type','text/html')
 			self.end_headers()
