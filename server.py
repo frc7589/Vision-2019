@@ -92,4 +92,5 @@ def main():
 		os._exit(0)
 
 if __name__ == '__main__':
+	time.sleep(10)
 	main()
